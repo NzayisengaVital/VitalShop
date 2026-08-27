@@ -1,0 +1,393 @@
+/* =====================================================
+   VITALSHOP - MAIN STYLES
+   ===================================================== */
+
+/* ---------- Brand Colors ---------- */
+
+:root {
+  --vital-blue: #0d47a1;
+  --vital-blue-dark: #08306b;
+  --vital-blue-light: #1976d2;
+
+  --vital-orange: #ff9800;
+  --vital-orange-dark: #f57c00;
+
+  --vital-white: #ffffff;
+  --vital-light: #f5f7fa;
+  --vital-gray: #6c757d;
+  --vital-dark: #172033;
+}
+
+
+/* ---------- General Page ---------- */
+
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  background-color: var(--vital-light);
+  color: var(--vital-dark);
+}
+
+
+/* ---------- Navbar ---------- */
+
+.navbar {
+  background-color: var(--vital-white) !important;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+  padding-top: 15px;
+  padding-bottom: 15px;
+}
+
+.navbar-brand {
+  color: var(--vital-blue) !important;
+  font-size: 1.6rem;
+  font-weight: 800;
+}
+
+.navbar-brand span {
+  color: var(--vital-orange);
+}
+
+.nav-link {
+  color: var(--vital-dark) !important;
+  font-weight: 500;
+  margin-left: 8px;
+  margin-right: 8px;
+}
+
+.nav-link:hover {
+  color: var(--vital-orange) !important;
+}
+
+.nav-link.active {
+  color: var(--vital-blue) !important;
+}
+
+
+/* ---------- Cart Button ---------- */
+
+.cart-button {
+  border: 2px solid var(--vital-blue);
+  color: var(--vital-blue);
+  border-radius: 25px;
+  font-weight: 600;
+  padding: 8px 18px;
+  transition: 0.3s ease;
+}
+
+.cart-button:hover {
+  background-color: var(--vital-blue);
+  color: white;
+}
+
+.cart-badge {
+  background-color: var(--vital-orange);
+}
+
+
+/* ---------- Hero Section ---------- */
+
+.vital-hero {
+  background: linear-gradient(135deg,
+      var(--vital-blue-dark),
+      var(--vital-blue));
+
+  color: white;
+  padding: 70px 20px;
+  min-height: 520px;
+
+  display: flex;
+  align-items: center;
+}
+
+.hero-logo {
+  width: 140px;
+  height: 140px;
+  object-fit: cover;
+  border-radius: 50%;
+  margin-bottom: 25px;
+  background-color: white;
+  padding: 5px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+}
+
+.vital-hero h1 {
+  font-size: 3rem;
+  font-weight: 800;
+  margin-bottom: 15px;
+}
+
+.vital-hero h1 span {
+  color: var(--vital-orange);
+}
+
+.vital-hero p {
+  font-size: 1.15rem;
+  max-width: 650px;
+  margin: 0 auto 30px;
+  color: rgba(255, 255, 255, 0.85);
+}
+
+
+/* ---------- Buttons ---------- */
+
+.btn-vital {
+  background-color: var(--vital-orange);
+  color: white;
+  border: none;
+  border-radius: 25px;
+  padding: 11px 25px;
+  font-weight: 700;
+  transition: 0.3s ease;
+}
+
+.btn-vital:hover {
+  background-color: var(--vital-orange-dark);
+  color: white;
+  transform: translateY(-2px);
+}
+
+
+/* ---------- Section Titles ---------- */
+
+.section-title {
+  text-align: center;
+  margin-bottom: 45px;
+}
+
+.section-title h2 {
+  color: var(--vital-blue);
+  font-weight: 800;
+}
+
+.section-title p {
+  color: var(--vital-gray);
+}
+
+
+/* ---------- Product Cards ---------- */
+
+.product-card {
+  border: none;
+  border-radius: 15px;
+  overflow: hidden;
+  background-color: white;
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.08);
+  transition: 0.3s ease;
+}
+
+.product-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.14);
+}
+
+.product-card img {
+  width: 100%;
+  height: 230px;
+  object-fit: contain;
+  padding: 15px;
+  background-color: white;
+}
+
+.product-card .card-body {
+  padding: 20px;
+}
+
+.product-name {
+  color: var(--vital-dark);
+  font-weight: 700;
+}
+
+.product-price {
+  color: var(--vital-blue);
+  font-size: 1.1rem;
+  font-weight: 700;
+}
+
+
+/* ---------- Product Buttons ---------- */
+
+.btn-product {
+  border: 2px solid var(--vital-blue);
+  color: var(--vital-blue);
+  border-radius: 25px;
+  font-weight: 600;
+  padding: 8px 20px;
+  transition: 0.3s ease;
+}
+
+.btn-product:hover {
+  background-color: var(--vital-blue);
+  color: white;
+}
+
+
+/* ---------- Sale Badge ---------- */
+
+.sale-badge {
+  background-color: var(--vital-orange);
+  color: white;
+  font-weight: 700;
+  padding: 6px 12px;
+  border-radius: 0 0 0 10px;
+}
+
+
+/* ---------- Footer ---------- */
+
+.vital-footer {
+  background-color: var(--vital-dark);
+  color: white;
+  padding: 50px 20px;
+}
+
+.vital-footer h5 {
+  color: var(--vital-orange);
+}
+
+.vital-footer a {
+  color: rgba(255, 255, 255, 0.75);
+  text-decoration: none;
+}
+
+.vital-footer a:hover {
+  color: white;
+}
+
+
+/* ---------- Mobile ---------- */
+
+@media (max-width: 768px) {
+
+  .vital-hero {
+    padding: 60px 20px;
+  }
+
+  .vital-hero h1 {
+    font-size: 2.2rem;
+  }
+
+  .hero-logo {
+    width: 110px;
+    height: 110px;
+  }
+}
+
+/* =====================================================
+   VITALSHOP NAVBAR
+   ===================================================== */
+
+.navbar-brand {
+  text-decoration: none;
+  letter-spacing: -0.5px;
+}
+
+.navbar-brand:hover {
+  color: var(--vital-blue) !important;
+}
+
+.navbar-nav .nav-link {
+  position: relative;
+  transition: color 0.3s ease;
+}
+
+.navbar-nav .nav-link::after {
+  content: "";
+  position: absolute;
+  width: 0;
+  height: 2px;
+  background-color: var(--vital-orange);
+  left: 50%;
+  bottom: 2px;
+  transform: translateX(-50%);
+  transition: width 0.3s ease;
+}
+
+.navbar-nav .nav-link:hover::after,
+.navbar-nav .nav-link.active::after {
+  width: 70%;
+}
+
+.navbar-toggler {
+  border: 1px solid var(--vital-blue);
+}
+
+.navbar-toggler:focus {
+  box-shadow: 0 0 0 0.15rem rgba(13, 71, 161, 0.2);
+}
+
+/* =====================================================
+   SHOP BY CATEGORY
+   ===================================================== */
+
+.categories-section {
+  background-color: white;
+}
+
+.category-card {
+  display: block;
+  text-align: center;
+  text-decoration: none;
+  color: var(--vital-dark);
+
+  background-color: var(--vital-light);
+
+  border-radius: 15px;
+
+  padding: 25px 10px;
+
+  height: 100%;
+
+  transition: all 0.3s ease;
+
+  border: 1px solid transparent;
+}
+
+.category-card:hover {
+  color: var(--vital-blue);
+
+  background-color: white;
+
+  border-color: rgba(13, 71, 161, 0.15);
+
+  transform: translateY(-6px);
+
+  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.1);
+}
+
+.category-icon {
+  width: 65px;
+  height: 65px;
+
+  margin: 0 auto 15px;
+
+  border-radius: 50%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background-color: var(--vital-blue);
+
+  color: white;
+
+  font-size: 1.5rem;
+
+  transition: all 0.3s ease;
+}
+
+.category-card:hover .category-icon {
+  background-color: var(--vital-orange);
+
+  transform: scale(1.08);
+}
+
+.category-card h5 {
+  font-weight: 700;
+  margin-bottom: 5px;
+}
+
+.category-card p {
+  margin: 0;
+  color: var(--vital-gray);
+  font-size: 0.85rem;
+}

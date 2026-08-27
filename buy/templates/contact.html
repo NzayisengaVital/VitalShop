@@ -1,0 +1,665 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Contact Us | VitalShop</title>
+
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+
+    <!-- VitalShop CSS -->
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+
+    <style>
+        .contact-section {
+            background-color: #f8f9fa;
+        }
+
+        .contact-card {
+            background: white;
+            border: none;
+            border-radius: 20px;
+            padding: 35px;
+            height: 100%;
+
+            box-shadow:
+                0 8px 25px rgba(0, 0, 0, 0.07);
+        }
+
+        .contact-icon {
+            width: 60px;
+            height: 60px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 50%;
+
+            background-color: rgba(13, 71, 161, 0.1);
+
+            color: var(--vital-blue);
+
+            font-size: 1.5rem;
+
+            margin-bottom: 15px;
+        }
+
+        .contact-title {
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .contact-text {
+            color: #6c757d;
+            line-height: 1.7;
+        }
+
+        .contact-form {
+            background: white;
+            border-radius: 20px;
+            padding: 35px;
+
+            box-shadow:
+                0 8px 25px rgba(0, 0, 0, 0.07);
+        }
+
+        .contact-form .form-control {
+            border-radius: 10px;
+            padding: 12px 15px;
+        }
+
+        .contact-form .form-control:focus {
+            border-color: var(--vital-blue);
+
+            box-shadow:
+                0 0 0 0.2rem rgba(13, 71, 161, 0.1);
+        }
+
+        .contact-submit {
+            background-color: var(--vital-blue);
+            color: white;
+
+            border: none;
+
+            border-radius: 25px;
+
+            padding: 11px 25px;
+
+            font-weight: 600;
+
+            transition: 0.3s ease;
+        }
+
+        .contact-submit:hover {
+            background-color: var(--vital-blue-dark);
+            color: white;
+
+            transform: translateY(-2px);
+        }
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <!-- ==========================================
+     NAVBAR
+     ========================================== -->
+
+    <nav class="navbar navbar-expand-lg">
+
+        <div class="container px-4 px-lg-5">
+
+            <a class="navbar-brand" href="{% url 'home' %}">
+
+                Vital<span>Shop</span>
+
+            </a>
+
+
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent">
+
+                <span class="navbar-toggler-icon"></span>
+
+            </button>
+
+
+            <div class="collapse navbar-collapse" id="navbarContent">
+
+                <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
+
+                    <li class="nav-item">
+
+                        <a class="nav-link" href="{% url 'home' %}">
+
+                            Home
+
+                        </a>
+
+                    </li>
+
+
+                    <li class="nav-item">
+
+                        <a class="nav-link" href="{% url 'home' %}#products">
+
+                            Shop
+
+                        </a>
+
+                    </li>
+
+
+                    <li class="nav-item">
+
+                        <a class="nav-link" href="{% url 'home' %}#categories">
+
+                            Categories
+
+                        </a>
+
+                    </li>
+
+
+                    <li class="nav-item">
+
+                        <a class="nav-link" href="{% url 'about' %}">
+
+                            About
+
+                        </a>
+
+                    </li>
+
+                </ul>
+
+
+                <div class="d-flex align-items-center">
+
+                    <a href="{% url 'cart' %}" class="btn btn-outline-primary me-2">
+
+                        <i class="bi bi-cart me-1"></i>
+
+                        Cart
+
+                    </a>
+
+
+                    {% if user.is_authenticated %}
+
+                    <a href="{% url 'account' %}" class="btn btn-primary">
+
+                        <i class="bi bi-person-circle me-1"></i>
+
+                        Account
+
+                    </a>
+
+                    {% else %}
+
+                    <a href="{% url 'login' %}" class="btn btn-primary">
+
+                        <i class="bi bi-person me-1"></i>
+
+                        Login
+
+                    </a>
+
+                    {% endif %}
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </nav>
+
+
+
+    <!-- ==========================================
+     CONTACT SECTION
+     ========================================== -->
+
+    <section class="contact-section py-5">
+
+        <div class="container px-4 px-lg-5">
+
+
+            <!-- TITLE -->
+
+            <div class="text-center mb-5">
+
+                <h1 class="fw-bold">
+                    Contact Us
+                </h1>
+
+                <p class="text-muted">
+
+                    Have a question about VitalShop?
+                    We'd love to hear from you.
+
+                </p>
+
+            </div>
+
+
+            <div class="row g-4">
+
+
+                <!-- ==================================
+                 CONTACT INFORMATION
+                 ================================== -->
+
+                <div class="col-lg-5">
+
+                    <div class="contact-card">
+
+                        <h3 class="fw-bold mb-4">
+                            Get In Touch
+                        </h3>
+
+
+                        <!-- EMAIL -->
+
+                        <div class="d-flex mb-4">
+
+                            <div class="contact-icon me-3">
+
+                                <i class="bi bi-envelope"></i>
+
+                            </div>
+
+                            <div>
+
+                                <h5 class="contact-title">
+                                    Email
+                                </h5>
+
+                                <p class="contact-text mb-0">
+
+                                    vitalnzayisenga301@gmail.com
+
+                                </p>
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- PHONE -->
+
+                        <div class="d-flex mb-4">
+
+                            <div class="contact-icon me-3">
+
+                                <i class="bi bi-telephone"></i>
+
+                            </div>
+
+                            <div>
+
+                                <h5 class="contact-title">
+                                    Phone
+                                </h5>
+
+                                <p class="contact-text mb-0">
+
+                                    +250 790 434 237
+
+                                </p>
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- LOCATION -->
+
+                        <div class="d-flex mb-4">
+
+                            <div class="contact-icon me-3">
+
+                                <i class="bi bi-geo-alt"></i>
+
+                            </div>
+
+                            <div>
+
+                                <h5 class="contact-title">
+                                    Location
+                                </h5>
+
+                                <p class="contact-text mb-0">
+
+                                    Rwanda-Kigal-Kicukiro
+
+                                </p>
+
+                            </div>
+
+                        </div>
+
+
+                        <hr>
+
+
+                        <p class="contact-text mt-4">
+
+                            Our goal is to make student shopping
+                            simple and convenient. If you have
+                            questions about a product, order or
+                            the website, feel free to contact us.
+
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- ==================================
+                 CONTACT FORM
+                 ================================== -->
+
+                <div class="col-lg-7">
+
+                    <div class="contact-form">
+
+                        <h3 class="fw-bold mb-4">
+                            Send Us a Message
+                        </h3>
+                        {% if success %}
+
+                        <div class="alert alert-success">
+
+                            <i class="bi bi-check-circle-fill me-2"></i>
+
+                            Thank you! Your message has been sent successfully.
+
+                        </div>
+
+                        {% endif %}
+
+                        <form method="POST">
+
+                            {% csrf_token %}
+
+
+                            <div class="row g-3">
+
+
+                                <!-- NAME -->
+
+                                <div class="col-md-6">
+
+                                    <label class="form-label">
+
+                                        Your Name
+
+                                    </label>
+
+                                    <input type="text" name="name" class="form-control" placeholder="Enter your name"
+                                        required>
+
+                                </div>
+
+
+                                <!-- EMAIL -->
+
+                                <div class="col-md-6">
+
+                                    <label class="form-label">
+
+                                        Email Address
+
+                                    </label>
+
+                                    <input type="email" name="email" class="form-control" placeholder="Enter your email"
+                                        required>
+
+                                </div>
+
+
+                                <!-- SUBJECT -->
+
+                                <div class="col-12">
+
+                                    <label class="form-label">
+
+                                        Subject
+
+                                    </label>
+
+                                    <input type="text" name="subject" class="form-control"
+                                        placeholder="What is your message about?" required>
+
+                                </div>
+
+
+                                <!-- MESSAGE -->
+
+                                <div class="col-12">
+
+                                    <label class="form-label">
+
+                                        Message
+
+                                    </label>
+
+                                    <textarea name="message" rows="6" class="form-control"
+                                        placeholder="Write your message here..." required></textarea>
+
+                                </div>
+
+
+                                <!-- BUTTON -->
+
+                                <div class="col-12">
+
+                                    <button type="submit" class="btn contact-submit">
+
+                                        <i class="bi bi-send me-1"></i>
+
+                                        Send Message
+
+                                    </button>
+
+                                </div>
+
+                            </div>
+
+                        </form>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- ==========================================
+     FOOTER
+     ========================================== -->
+
+    <footer class="vital-footer">
+
+        <div class="container px-4 px-lg-5">
+
+            <div class="row g-4">
+
+
+                <div class="col-lg-4">
+
+                    <h4 class="footer-brand">
+                        Vital<span>Shop</span>
+                    </h4>
+
+                    <p class="footer-description">
+
+                        Your convenient online shop for
+                        useful products needed by students
+                        for campus and everyday life.
+
+                    </p>
+
+                </div>
+
+
+                <div class="col-lg-2 col-md-6">
+
+                    <h5 class="footer-title">
+                        Quick Links
+                    </h5>
+
+                    <ul class="footer-links">
+
+                        <li>
+                            <a href="{% url 'home' %}">
+                                Home
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="{% url 'home' %}#products">
+                                Shop
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="{% url 'home' %}#categories">
+                                Categories
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="{% url 'about' %}">
+                                About
+                            </a>
+                        </li>
+
+                    </ul>
+
+                </div>
+
+
+                <div class="col-lg-3 col-md-6">
+
+                    <h5 class="footer-title">
+                        Customer
+                    </h5>
+
+                    <ul class="footer-links">
+
+                        <li>
+                            <a href="{% url 'account' %}">
+                                My Account
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="{% url 'cart' %}">
+                                Shopping Cart
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="{% url 'my_orders' %}">
+                                My Orders
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="{% url 'track_order' %}">
+                                Track Order
+                            </a>
+                        </li>
+
+                    </ul>
+
+                </div>
+
+
+                <div class="col-lg-3 col-md-6">
+
+                    <h5 class="footer-title">
+                        Information
+                    </h5>
+
+                    <ul class="footer-links">
+
+                        <li>
+                            <a href="{% url 'privacy' %}">
+                                Privacy Policy
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="{% url 'terms' %}">
+                                Terms & Conditions
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="{% url 'contact' %}">
+                                Contact Us
+                            </a>
+                        </li>
+
+                    </ul>
+
+                </div>
+
+            </div>
+
+
+            <hr class="footer-divider">
+
+
+            <div class="footer-bottom">
+
+                <p class="mb-0">
+
+                    &copy; {% now "Y" %} VitalShop.
+                    All rights reserved.
+
+                </p>
+
+                <p class="mb-0">
+
+                    Student essentials made easy.
+
+                </p>
+
+            </div>
+
+        </div>
+
+    </footer>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js">
+    </script>
+
+</body>
+
+</html>

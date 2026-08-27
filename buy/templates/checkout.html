@@ -1,0 +1,394 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Checkout | VitalShop</title>
+
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+        rel="stylesheet"
+    >
+
+    <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css"
+    >
+
+    <link
+        rel="stylesheet"
+        href="{% static 'css/styles.css' %}"
+    >
+
+    <style>
+
+        .checkout-section {
+            background-color: #f8f9fa;
+            min-height: 80vh;
+        }
+
+        .checkout-card {
+            background: white;
+            border-radius: 18px;
+            padding: 30px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.06);
+        }
+
+        .checkout-title {
+            color: var(--vital-dark);
+            font-weight: 700;
+        }
+
+        .form-label {
+            font-weight: 600;
+        }
+
+        .form-control {
+            border-radius: 10px;
+            padding: 11px 14px;
+        }
+
+        .form-control:focus {
+            border-color: var(--vital-blue);
+            box-shadow: 0 0 0 0.2rem rgba(13, 71, 161, 0.1);
+        }
+
+        .order-summary-item {
+            border-bottom: 1px solid #eee;
+            padding: 12px 0;
+        }
+
+        .checkout-total {
+            color: var(--vital-blue);
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        .place-order-button {
+            width: 100%;
+            background-color: var(--vital-blue);
+            color: white;
+            border: none;
+            border-radius: 25px;
+            padding: 12px;
+            font-weight: 600;
+        }
+
+        .place-order-button:hover {
+            background-color: var(--vital-blue-dark);
+            color: white;
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- NAVBAR -->
+
+<nav class="navbar navbar-expand-lg">
+
+    <div class="container px-4 px-lg-5">
+
+        <a
+            class="navbar-brand"
+            href="/"
+        >
+            Vital<span>Shop</span>
+        </a>
+
+        <a
+            href="{% url 'cart' %}"
+            class="btn cart-button"
+        >
+
+            <i class="bi bi-cart-fill me-1"></i>
+
+            Cart
+
+            <span class="badge cart-badge rounded-pill ms-1">
+                {{ cart_count }}
+            </span>
+
+        </a>
+
+    </div>
+
+</nav>
+
+
+
+<!-- CHECKOUT -->
+
+<section class="checkout-section py-5">
+
+    <div class="container px-4 px-lg-5">
+
+        <h1 class="checkout-title mb-4">
+
+            <i class="bi bi-bag-check me-2"></i>
+
+            Checkout
+
+        </h1>
+
+
+        <form method="POST">
+
+            {% csrf_token %}
+
+            <div class="row g-4">
+
+
+                <!-- CUSTOMER INFORMATION -->
+
+                <div class="col-lg-7">
+
+                    <div class="checkout-card">
+
+                        <h4 class="mb-4">
+                            Customer Information
+                        </h4>
+
+
+                        <div class="row g-3">
+
+                            <div class="col-md-6">
+
+                                <label
+                                    for="first_name"
+                                    class="form-label"
+                                >
+                                    First Name
+                                </label>
+
+                                <input
+                                    type="text"
+                                    name="first_name"
+                                    id="first_name"
+                                    class="form-control"
+                                    required
+                                >
+
+                            </div>
+
+
+                            <div class="col-md-6">
+
+                                <label
+                                    for="last_name"
+                                    class="form-label"
+                                >
+                                    Last Name
+                                </label>
+
+                                <input
+                                    type="text"
+                                    name="last_name"
+                                    id="last_name"
+                                    class="form-control"
+                                    required
+                                >
+
+                            </div>
+
+
+                            <div class="col-md-6">
+
+                                <label
+                                    for="phone"
+                                    class="form-label"
+                                >
+                                    Phone Number
+                                </label>
+
+                                <input
+                                    type="tel"
+                                    name="phone"
+                                    id="phone"
+                                    class="form-control"
+                                    placeholder="07XXXXXXXX"
+                                    required
+                                >
+
+                            </div>
+
+
+                            <div class="col-md-6">
+
+                                <label
+                                    for="email"
+                                    class="form-label"
+                                >
+                                    Email
+                                </label>
+
+                                <input
+                                    type="email"
+                                    name="email"
+                                    id="email"
+                                    class="form-control"
+                                >
+
+                            </div>
+
+
+                            <div class="col-12">
+
+                                <label
+                                    for="delivery_address"
+                                    class="form-label"
+                                >
+                                    Delivery / Pickup Location
+                                </label>
+
+                                <textarea
+                                    name="delivery_address"
+                                    id="delivery_address"
+                                    class="form-control"
+                                    rows="4"
+                                    placeholder="Enter where you would like to receive or collect your order"
+                                    required
+                                ></textarea>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- ORDER SUMMARY -->
+
+                <div class="col-lg-5">
+
+                    <div class="checkout-card">
+
+                        <h4 class="mb-4">
+                            Your Order
+                        </h4>
+
+
+                        {% for item in cart_items %}
+
+                            <div class="order-summary-item">
+
+                                <div class="d-flex justify-content-between">
+
+                                    <div>
+
+                                        <strong>
+                                            {{ item.product.name }}
+                                        </strong>
+
+                                        <small class="text-muted d-block">
+
+                                            {{ item.quantity }}
+                                            ×
+                                            {{ item.product.price }}
+                                            RWF
+
+                                        </small>
+
+                                    </div>
+
+                                    <strong>
+
+                                        {{ item.subtotal }}
+                                        RWF
+
+                                    </strong>
+
+                                </div>
+
+                            </div>
+
+                        {% endfor %}
+
+
+                        <div class="d-flex justify-content-between mt-4">
+
+                            <strong>
+                                Total
+                            </strong>
+
+                            <span class="checkout-total">
+
+                                {{ total }}
+                                RWF
+
+                            </span>
+
+                        </div>
+
+
+                        <button
+                            type="submit"
+                            class="btn place-order-button mt-4"
+                        >
+
+                            <i class="bi bi-check-circle me-1"></i>
+
+                            Place Order
+
+                        </button>
+
+
+                        <a
+                            href="{% url 'cart' %}"
+                            class="btn btn-link w-100 mt-2"
+                        >
+                            Back to Cart
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</section>
+
+
+
+<!-- FOOTER -->
+
+<footer class="py-4 bg-dark text-white">
+
+    <div class="container text-center">
+
+        <p class="mb-1">
+            &copy; {% now "Y" %} VitalShop
+        </p>
+
+        <small class="text-white-50">
+            Student essentials made easy.
+        </small>
+
+    </div>
+
+</footer>
+
+
+</body>
+
+</html>

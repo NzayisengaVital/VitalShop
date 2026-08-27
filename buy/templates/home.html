@@ -1,0 +1,702 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <title>VitalShop</title>
+    <!-- Favicon-->
+    <link rel="icon" type="image/x-icon" href=" {% static 'assets/favicon.ico'  %} " />
+    <!-- Bootstrap icons-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
+    <!-- Core theme CSS (includes Bootstrap)-->
+    <link href="{% static 'css/styles.css' %}" rel="stylesheet" />
+    <link rel="manifest" href="{% static 'manifest.json' %}">
+    <meta name="theme-color" content="#0d47a1">
+
+
+</head>
+
+<body>
+    <!-- Navigation-->
+    <nav class="navbar navbar-expand-lg">
+        <div class="container px-4 px-lg-5">
+
+            <!-- Brand -->
+            <a class="navbar-brand" href="/">
+                Vital<span>Shop</span>
+            </a>
+
+            <!-- Mobile menu button -->
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent"
+                aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
+
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <!-- Navigation -->
+            <div class="collapse navbar-collapse" id="navbarContent">
+
+                <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
+
+                    <li class="nav-item">
+                        <a class="nav-link active" href="/">
+                            Home
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="#products">
+                            Shop
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="#categories">
+                            Categories
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'about' %}">
+                            About
+                        </a>
+                    </li>
+
+                </ul>
+
+                <!-- Cart -->
+
+                <a href="{% url 'cart' %}" class="btn btn-outline-primary me-2">
+                    <i class="bi bi-cart"></i>
+                    Cart
+
+                    <span class="badge cart-badge rounded-pill">
+                        {{ cart_count|default:0 }}
+                    </span>
+                </a>
+
+                {% if user.is_authenticated %}
+
+                <a href="{% url 'account' %}" class="btn btn-primary">
+                    <i class="bi bi-person-circle me-1"></i>
+                    Account
+                </a>
+
+                {% else %}
+
+                <a href="{% url 'login' %}" class="btn btn-primary">
+                    <i class="bi bi-person me-1"></i>
+                    Login
+                </a>
+
+                {% endif %}
+
+            </div>
+        </div>
+    </nav>
+    <!-- Header-->
+    <header class="vital-hero">
+        <div class="container text-center">
+
+            <img src="{% static 'assets/shoplogo.png' %}" alt="VitalShop Logo" class="hero-logo">
+
+            <h1>
+                Everything You Need for
+                <span>Campus</span>
+            </h1>
+
+            <p>
+                Shop papers, pens, notebooks, mathematical sets,
+                calculators and other student essentials — all in one place.
+            </p>
+
+            <a href="#products" class="btn btn-vital">
+                <i class="bi bi-bag-fill me-2"></i>
+                Shop Now
+            </a>
+
+        </div>
+
+    </header>
+    <!-- ==============================
+     SHOP BY CATEGORY
+     ============================== -->
+
+    <section class="categories-section py-5" id='categories'>
+        <!-- Section-->
+        <section id="products" class="py-5">
+            <!-- ==========================================
+     SEARCH & FILTER
+     ========================================== -->
+
+            <div class="search-filter-box mb-5">
+
+                <form method="GET" action="{% url 'home' %}">
+
+                    <div class="row g-3 align-items-end">
+
+                        <!-- SEARCH -->
+
+                        <div class="col-lg-4">
+
+                            <label class="form-label fw-semibold">
+                                Search Products
+                            </label>
+
+                            <div class="input-group">
+
+                                <span class="input-group-text">
+                                    <i class="bi bi-search"></i>
+                                </span>
+
+                                <input type="text" name="search" class="form-control"
+                                    placeholder="Search pens, papers, diaries..." value="{{ search_query }}">
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- CATEGORY -->
+
+                        <div class="col-lg-3">
+
+                            <label class="form-label fw-semibold">
+                                Category
+                            </label>
+
+                            <select name="category" class="form-select">
+
+                                <option value="">
+                                    All Categories
+                                    {% for category in categories %}
+
+                                <option value="{{ category.id }}" {% if
+                                    selected_category|stringformat:"s"==category.id|stringformat:"s" %} selected {%
+                                    endif %}>
+
+                                    {{ category.name }}
+
+                                </option>
+
+
+
+                                {% endfor %}
+
+                            </select>
+
+                        </div>
+
+
+                        <!-- MIN PRICE -->
+
+                        <div class="col-lg-2">
+
+                            <label class="form-label fw-semibold">
+                                Min Price
+                            </label>
+
+                            <input type="number" name="min_price" class="form-control" placeholder="0" min="0"
+                                value="{{ min_price }}">
+
+                        </div>
+
+
+                        <!-- MAX PRICE -->
+
+                        <div class="col-lg-2">
+
+                            <label class="form-label fw-semibold">
+                                Max Price
+                            </label>
+
+                            <input type="number" name="max_price" class="form-control" placeholder="100000" min="0"
+                                value="{{ max_price }}">
+
+                        </div>
+
+
+                        <!-- SEARCH BUTTON -->
+
+                        <div class="col-lg-1">
+
+                            <button type="submit" class="btn btn-primary w-100" title="Search">
+
+                                <i class="bi bi-search"></i>
+
+                            </button>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- CLEAR -->
+
+                    {% if search_query or selected_category or min_price or max_price %}
+
+                    <div class="mt-3">
+
+                        <a href="{% url 'home' %}" class="btn btn-sm btn-outline-secondary">
+
+                            <i class="bi bi-x-circle me-1"></i>
+
+                            Clear Filters
+
+                        </a>
+
+                    </div>
+
+                    {% endif %}
+
+                </form>
+
+            </div>
+
+            <div class="container px-4 px-lg-5">
+
+                <div class="section-title">
+                    <h2>Shop by Category</h2>
+                    <p>Find the essentials you need for campus</p>
+                </div>
+
+                <div class="row g-4 justify-content-center">
+
+                    <!-- Stationery -->
+                    <div class="col-6 col-md-4 col-lg-2">
+                        <a href="#" class="category-card">
+                            <div class="category-icon">
+                                <i class="bi bi-pencil-fill"></i>
+                            </div>
+
+                            <h5>Stationery</h5>
+                            <p>Pens & more</p>
+                        </a>
+                    </div>
+
+                    <!-- Books -->
+                    <div class="col-6 col-md-4 col-lg-2">
+                        <a href="#" class="category-card">
+                            <div class="category-icon">
+                                <i class="bi bi-book-fill"></i>
+                            </div>
+
+                            <h5>Books</h5>
+                            <p>Study materials</p>
+                        </a>
+                    </div>
+
+                    <!-- Notebooks -->
+                    <div class="col-6 col-md-4 col-lg-2">
+                        <a href="#" class="category-card">
+                            <div class="category-icon">
+                                <i class="bi bi-journal-text"></i>
+                            </div>
+
+                            <h5>Notebooks</h5>
+                            <p>Diaries & notes</p>
+                        </a>
+                    </div>
+
+                    <!-- Mathematics -->
+                    <div class="col-6 col-md-4 col-lg-2">
+                        <a href="#" class="category-card">
+                            <div class="category-icon">
+                                <i class="bi bi-rulers"></i>
+                            </div>
+
+                            <h5>Math Sets</h5>
+                            <p>Drawing tools</p>
+                        </a>
+                    </div>
+
+                    <!-- Calculators -->
+                    <div class="col-6 col-md-4 col-lg-2">
+                        <a href="#" class="category-card">
+                            <div class="category-icon">
+                                <i class="bi bi-calculator-fill"></i>
+                            </div>
+
+                            <h5>Calculators</h5>
+                            <p>Scientific & more</p>
+                        </a>
+                    </div>
+
+                    <!-- Papers -->
+                    <div class="col-6 col-md-4 col-lg-2">
+                        <a href="#" class="category-card">
+                            <div class="category-icon">
+                                <i class="bi bi-file-earmark-text-fill"></i>
+                            </div>
+
+                            <h5>Paper</h5>
+                            <p>Printing & writing</p>
+                        </a>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <div class="section-title">
+            <h2>Popular Products</h2>
+            <p>Student essentials at affordable prices</p>
+        </div>
+
+        <div class="row g-4">
+
+            {% for product in products %}
+
+            <div class="col-12 col-sm-6 col-lg-3">
+
+                <div class="card product-card h-100">
+
+
+                    <!-- Product clickable area -->
+                    <a href="{% url 'product_detail' product.id %}" class="product-card-link">
+
+                        <!-- Image -->
+
+                        {% if product.image %}
+
+                        <img src="{{ product.image.url }}" class="card-img-top product-image" alt="{{ product.name }}">
+
+                        {% else %}
+
+                        <div class="no-product-image">
+
+                            <i class="bi bi-image"></i>
+
+                        </div>
+
+                        {% endif %}
+
+
+                        <!-- Product information -->
+
+                        <div class="card-body text-center">
+
+                            <h5 class="product-name">
+                                {{ product.name }}
+                            </h5>
+
+                            <p class="product-description">
+                                {{ product.description }}
+                            </p>
+
+                            <div class="product-price">
+                                {{ product.price }} RWF
+                            </div>
+
+                        </div>
+
+                    </a>
+
+
+                    <!-- Add to Cart -->
+
+                    <div class="card-footer text-center">
+
+                        <a href="{% url 'add_to_cart' product.id %}" class="btn btn-product">
+
+                            <i class="bi bi-cart-plus me-1"></i>
+
+                            Add to Cart
+
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            {% empty %}
+
+            <div class="col-12">
+
+                <div class="empty-products text-center py-5">
+
+                    <i class="bi bi-box-seam fs-1 text-muted"></i>
+
+                    <h4 class="mt-3">
+                        No products available
+                    </h4>
+
+                    <p class="text-muted">
+                        Check back soon for new products.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+
+        </div>
+
+        <div class="col-12">
+
+            <div class="text-center py-5">
+
+                <i class="bi bi-box-seam fs-1 text-muted"></i>
+
+                <h4 class="mt-3">
+                    No products available
+                </h4>
+
+                <p class="text-muted">
+                    Check back soon for new products.
+                </p>
+
+            </div>
+
+        </div>
+
+        {% endfor %}
+        <!-- Footer-->
+        <footer class="vital-footer">
+
+            <div class="container px-4 px-lg-5">
+
+                <div class="row g-4">
+
+                    <!-- BRAND -->
+
+                    <div class="col-lg-4 col-md-6">
+
+                        <h4 class="footer-brand">
+                            Vital<span>Shop</span>
+                        </h4>
+
+                        <p class="footer-description">
+
+                            Your convenient online shop for
+                            useful products needed by students
+                            for campus and everyday life.
+
+                        </p>
+
+                        <div class="footer-social">
+
+                            <a href="#" aria-label="Facebook">
+                                <i class="bi bi-facebook"></i>
+                            </a>
+
+                            <a href="#" aria-label="Instagram">
+                                <i class="bi bi-instagram"></i>
+                            </a>
+
+                            <a href="#" aria-label="YouTube">
+                                <i class="bi bi-youtube"></i>
+                            </a>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- QUICK LINKS -->
+
+                    <div class="col-lg-2 col-md-6">
+
+                        <h5 class="footer-title">
+                            Quick Links
+                        </h5>
+
+                        <ul class="footer-links">
+
+                            <li>
+                                <a href="{% url 'home' %}">
+                                    Home
+                                </a>
+                            </li>
+
+                            <li>
+                                <a href="{% url 'home' %}#products">
+                                    Shop
+                                </a>
+                            </li>
+
+                            <li>
+                                <a href="{% url 'home' %}#categories">
+                                    Categories
+                                </a>
+                            </li>
+
+                            <li>
+                                <a href="{% url 'about' %}">
+                                    About Us
+                                </a>
+                            </li>
+
+                        </ul>
+
+                    </div>
+
+
+                    <!-- CUSTOMER -->
+
+                    <div class="col-lg-3 col-md-6">
+
+                        <h5 class="footer-title">
+                            Customer
+                        </h5>
+
+                        <ul class="footer-links">
+
+                            <li>
+                                <a href="{% url 'account' %}">
+                                    My Account
+                                </a>
+                            </li>
+
+                            <li>
+                                <a href="{% url 'cart' %}">
+                                    Shopping Cart
+                                </a>
+                            </li>
+
+                            <li>
+                                <a href="{% url 'my_orders' %}">
+                                    My Orders
+                                </a>
+                            </li>
+
+                            <li>
+                                <a href="{% url 'track_order' %}">
+                                    Track Order
+                                </a>
+                            </li>
+
+                        </ul>
+
+                    </div>
+
+
+                    <!-- INFORMATION -->
+
+                    <div class="col-lg-3 col-md-6">
+
+                        <h5 class="footer-title">
+                            Information
+                        </h5>
+
+                        <ul class="footer-links">
+
+                            <li>
+                                <a href="{% url 'privacy' %}">
+                                    Privacy Policy
+                                </a>
+                            </li>
+
+                            <li>
+                                <a href="{% url 'terms' %}">
+                                    Terms & Conditions
+                                </a>
+                            </li>
+
+                            <li>
+                                <a href="{% url 'contact' %}">
+                                    Contact Us
+                                </a>
+                            </li>
+
+                            <li>
+                                <a href="{% url 'help' %}">
+                                    Help Center
+                                </a>
+                            </li>
+
+                        </ul>
+
+                    </div>
+
+                </div>
+
+
+                <!-- DIVIDER -->
+
+                <hr class="footer-divider">
+
+
+                <!-- BOTTOM -->
+
+                <div class="footer-bottom">
+
+                    <p class="mb-0">
+
+                        &copy; {% now "Y" %} VitalShop.
+                        All rights reserved.
+
+                    </p>
+
+                    <p class="mb-0">
+
+                        Student essentials made easy.
+
+                    </p>
+
+                </div>
+
+            </div>
+
+        </footer>
+        <script>
+
+            if ("serviceWorker" in navigator) {
+
+                window.addEventListener("load", function () {
+
+                    navigator.serviceWorker.register(
+                        "{% static 'service-worker.js' %}"
+                    )
+
+                        .then(function (registration) {
+
+                            console.log(
+                                "VitalShop service worker registered:",
+                                registration.scope
+                            );
+
+                        })
+
+                        .catch(function (error) {
+
+                            console.log(
+                                "Service worker registration failed:",
+                                error
+                            );
+
+                        });
+
+                });
+
+            }
+
+        </script>
+
+
+        <!-- Bootstrap core JS-->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+        <!-- Core theme JS-->
+
+        <!--Javascript of bootstrap-->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js">
+        </script>
+        <!--My javascript-->
+        <script src="{% static 'js/scripts.js' %}"></script>
+
+</body>
+
+</html>
