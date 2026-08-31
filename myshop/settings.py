@@ -14,6 +14,10 @@ from pathlib import Path
 import os
 import dj_database_url
 
+from dotenv import load_dotenv
+
+load_dotenv()
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -30,6 +34,7 @@ SECRET_KEY = 'w5&!eh_rz(dq=tjn8^0su@i8eiq@#u+q2c9!j)ex%8h_jv4+@s'
 
 #DEBUG = os.environ.get("DEBUG", "False") == "True"
 DEBUG = os.environ.get("DEBUG", "False") == "True"
+
 ALLOWED_HOSTS = [
     "127.0.0.1",
     "localhost",
@@ -143,6 +148,13 @@ STATICFILES_DIRS = [
 ]
 
 STATIC_ROOT = BASE_DIR / 'staticfiles'
+
+CLOUDINARY_STORAGE = {
+    'CLOUD_NAME': os.environ.get('CLOUDINARY_CLOUD_NAME'),
+    'API_KEY': os.environ.get('CLOUDINARY_API_KEY'),
+    'API_SECRET': os.environ.get('CLOUDINARY_API_SECRET'),
+    'PREFIX': '',
+}
 
 STORAGES = {
     'default': {
